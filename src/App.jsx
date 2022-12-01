@@ -1,4 +1,6 @@
+import Formulario from "./components/formulario";
 import Header from "./components/header";
+import ListadoPacientes from "./components/listadoPacientes";
 
 function App() {
 
@@ -7,6 +9,8 @@ function App() {
   return (
     <>
       <Header/>
+      <Formulario/>
+      <ListadoPacientes/>
     </>
   )
 }
