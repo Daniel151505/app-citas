@@ -12,21 +12,20 @@ const Formulario = ({ pacientes, setPacientes, paciente }) => {
 
   useEffect(() => {
     if (Object.keys(paciente).length > 0) {
-      setNombre(paciente.nombre)
-      setPropietario(paciente.propietario)
-      setEmail(paciente.email)
-      setFecha(paciente.fecha)
-      setSintomas(paciente.sintomas)
-    } 
-  }, [paciente])
-  
+      setNombre(paciente.nombre);
+      setPropietario(paciente.propietario);
+      setEmail(paciente.email);
+      setFecha(paciente.fecha);
+      setSintomas(paciente.sintomas);
+    }
+  }, [paciente]);
 
   const generarId = () => {
-    const random = Math.random().toString(36).substring(2)
-    const fecha = Date.now().toString(36)
-    
-    return random + fecha
-  }
+    const random = Math.random().toString(36).substring(2);
+    const fecha = Date.now().toString(36);
+
+    return random + fecha;
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -48,10 +47,27 @@ const Formulario = ({ pacientes, setPacientes, paciente }) => {
       email,
       fecha,
       sintomas,
-      id: generarId()
     };
 
-    setPacientes([...pacientes, objetoPaciente]);
+    if (paciente.id) {
+      // Editando el registro
+
+      objetoPaciente.id = paciente.id;
+
+      const pacientesActualizados = pacientes.map(pacienteState =>
+        pacienteState.id === paciente.id ? objetoPaciente : pacienteState
+      );
+
+      setPacientes(pacientesActualizados)
+      setPaciente({})
+
+      console.log(pacientesActualizados);
+    } else {
+      // Nuevo Registro
+
+      objetoPaciente.id = generarId();
+      setPacientes([...pacientes, objetoPaciente]);
+    }
 
     // Reiniciar el form
     setNombre("");
@@ -165,7 +181,7 @@ const Formulario = ({ pacientes, setPacientes, paciente }) => {
         <input
           type="submit"
           className="bg-indigo-600 w-full p-3 text-white uppercase font-bold hover:bg-indigo-700 cursor-pointer transition-colors"
-          value={paciente.id ? 'Editar Paciente' : 'Agregar Paciente'}
+          value={paciente.id ? "Editar Paciente" : "Agregar Paciente"}
         />
       </form>
     </div>
