@@ -4,12 +4,13 @@ import Header from "./components/Header";
 import ListadoPacientes from "./components/ListadoPacientes";
 
 function App() {
-  const [pacientes, setPacientes] = useState([]);
-  const [paciente, setPaciente] = useState([]);
+  const[pacientes, setPacientes] = useState(() => JSON.parse(localStorage.getItem('pacientes')) || []);
+  const [paciente, setPaciente] = useState({});
   
   useEffect(() => {
     localStorage.setItem('pacientes', JSON.stringify(pacientes))
   }, [pacientes])
+  
   
 
   const eliminarPaciente = id => {
